@@ -28,12 +28,19 @@ class InputForm extends StatefulWidget {
 }
 
 class InputFormState extends State<InputForm> {
-  late String _userInput;
+  late String userInput;
+  //final _entries = <Entries>[];
+  //final List<Entries> _entries = [];
+  //final List<String> _entries = [];
+  Contact _contact = Contact(name: "");
+  List<Contact> _contacts = [];
   final _formKey = GlobalKey<FormState>();
-  //final userInputData = GlobalKey<>;
+  final userInputData = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: userInputData,
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -46,7 +53,7 @@ class InputFormState extends State<InputForm> {
               TextFormField(
                 autocorrect: true,
                 decoration: const InputDecoration(
-                  hintText: 'Enter text',
+                  labelText: 'Enter text',
                   // counterText: '0 characters',
                   border: OutlineInputBorder(),
                 ),
@@ -56,18 +63,29 @@ class InputFormState extends State<InputForm> {
                   }
                   return null;
                 },
-                onSaved: (value) => _userInput = value!,
+                onSaved: (value) => setState(() => _contact.name = value!),
+                //onSaved: (value) => userInput = value!,
               ),
               ElevatedButton(
                 onPressed: _validInput,
                 child: const Text("Submit"),
-              )
+              ),
+              Expanded(
+                  child: ListView.builder(
+                      itemCount: _contacts.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: <Widget>[
+                            ListTile(title: Text(_contacts[index].name)),
+                            const Divider(),
+                          ],
+                        );
+                      }))
             ],
           ),
         ),
       ),
     );
-    //throw UnimplementedError();
   }
 
   _validInput() {
@@ -76,6 +94,18 @@ class InputFormState extends State<InputForm> {
         const SnackBar(content: Text('Submitted Successfully')),
       );
       _formKey.currentState!.save();
+      //r _entries.add(userInput);
+      _contacts.add(Contact(name: _contact.name));
+      _formKey.currentState!.reset();
     }
   }
+}
+
+// class Entries {
+
+// }
+class Contact {
+  Contact({required this.name});
+
+  String name;
 }
