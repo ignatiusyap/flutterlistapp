@@ -35,9 +35,11 @@ class InputFormState extends State<InputForm> {
 
   UserEntry _userentry = UserEntry(entry: "");
   List<UserEntry> _userentries = [];
+  int _charLength = 0;
 
   final _formKey = GlobalKey<FormState>();
   //final userInputData = GlobalKey<ScaffoldState>();
+  final textController = TextEditingController();
   final ScrollController _controller = ScrollController();
 
   @override
@@ -54,24 +56,29 @@ class InputFormState extends State<InputForm> {
           child: Column(
             children: <Widget>[
               TextFormField(
-                autocorrect: true,
-                decoration: const InputDecoration(
-                  labelText: 'Enter text',
-                  // counterText: '0 characters',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                onSaved: (value) => setState(() => _userentry.entry = value!),
-                //onSaved: (value) => userInput = value!,
-              ),
+                  controller: textController,
+                  autocorrect: true,
+                  decoration: InputDecoration(
+                    labelText: 'Enter text',
+                    counterText: '$_charLength characters',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    if (_charLength <= 99) {
+                      return 'Please type at lest a 100 characters text';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) => setState(() => _userentry.entry = value!),
+                  onChanged: _onChanged
+                  //onSaved: (value) => userInput = value!,
+                  ),
               ElevatedButton(
                 onPressed: _validInput,
-                child: const Text("Submit"),
+                child: const Text("Add text"),
               ),
               Expanded(
                   child: ListView.builder(
@@ -118,6 +125,12 @@ class InputFormState extends State<InputForm> {
     }
   }
 
+  _onChanged(String value) {
+    setState(() {
+      _charLength = value.length;
+    });
+  }
+
   void _scrollDown() {
     _controller.animateTo(
       _controller.position.maxScrollExtent,
@@ -134,8 +147,6 @@ class InputFormState extends State<InputForm> {
     );
   }
 }
-
-FloatingActionButtonLocation _EndDockedFabLocation() {}
 
 class UserEntry {
   UserEntry({required this.entry});
