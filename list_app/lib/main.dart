@@ -38,6 +38,7 @@ class InputFormState extends State<InputForm> {
 
   final _formKey = GlobalKey<FormState>();
   //final userInputData = GlobalKey<ScaffoldState>();
+  final ScrollController _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +85,18 @@ class InputFormState extends State<InputForm> {
                   );
                 },
                 physics: const AlwaysScrollableScrollPhysics(),
-              ))
+                controller: _controller,
+                //reverse: true
+              )),
+              //FloatingActionButtonLocation.endDocked),
+              FloatingActionButton(
+                onPressed: _scrollUp,
+                child: const Icon(Icons.arrow_upward),
+              ),
+              FloatingActionButton(
+                onPressed: _scrollDown,
+                child: const Icon(Icons.arrow_downward),
+              )
             ],
           ),
         ),
@@ -105,7 +117,25 @@ class InputFormState extends State<InputForm> {
       _formKey.currentState!.reset();
     }
   }
+
+  void _scrollDown() {
+    _controller.animateTo(
+      _controller.position.maxScrollExtent,
+      duration: Duration(seconds: 2),
+      curve: Curves.fastOutSlowIn,
+    );
+  }
+
+  void _scrollUp() {
+    _controller.animateTo(
+      _controller.position.minScrollExtent,
+      duration: Duration(seconds: 2),
+      curve: Curves.fastOutSlowIn,
+    );
+  }
 }
+
+FloatingActionButtonLocation _EndDockedFabLocation() {}
 
 class UserEntry {
   UserEntry({required this.entry});
