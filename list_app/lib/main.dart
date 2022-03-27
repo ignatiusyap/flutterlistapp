@@ -74,15 +74,17 @@ class InputFormState extends State<InputForm> {
               ),
               Expanded(
                   child: ListView.builder(
-                      itemCount: _userentries.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: <Widget>[
-                            ListTile(title: Text(_userentries[index].entry)),
-                            const Divider(),
-                          ],
-                        );
-                      }))
+                itemCount: _userentries.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: <Widget>[
+                      ListTile(title: Text(_userentries[index].entry)),
+                      const Divider(),
+                    ],
+                  );
+                },
+                physics: const AlwaysScrollableScrollPhysics(),
+              ))
             ],
           ),
         ),
@@ -93,7 +95,10 @@ class InputFormState extends State<InputForm> {
   _validInput() {
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Submitted Successfully')),
+        const SnackBar(
+          content: Text('Submitted Successfully'),
+          duration: Duration(milliseconds: 500),
+        ),
       );
       _formKey.currentState!.save();
       _userentries.add(UserEntry(entry: _userentry.entry));
