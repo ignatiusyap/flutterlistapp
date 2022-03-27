@@ -32,15 +32,17 @@ class InputFormState extends State<InputForm> {
   //final _entries = <Entries>[];
   //final List<Entries> _entries = [];
   //final List<String> _entries = [];
-  Contact _contact = Contact(name: "");
-  List<Contact> _contacts = [];
+
+  UserEntry _userentry = UserEntry(entry: "");
+  List<UserEntry> _userentries = [];
+
   final _formKey = GlobalKey<FormState>();
-  final userInputData = GlobalKey<ScaffoldState>();
+  //final userInputData = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: userInputData,
+      //key: userInputData,
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -63,7 +65,7 @@ class InputFormState extends State<InputForm> {
                   }
                   return null;
                 },
-                onSaved: (value) => setState(() => _contact.name = value!),
+                onSaved: (value) => setState(() => _userentry.entry = value!),
                 //onSaved: (value) => userInput = value!,
               ),
               ElevatedButton(
@@ -72,11 +74,11 @@ class InputFormState extends State<InputForm> {
               ),
               Expanded(
                   child: ListView.builder(
-                      itemCount: _contacts.length,
+                      itemCount: _userentries.length,
                       itemBuilder: (context, index) {
                         return Column(
                           children: <Widget>[
-                            ListTile(title: Text(_contacts[index].name)),
+                            ListTile(title: Text(_userentries[index].entry)),
                             const Divider(),
                           ],
                         );
@@ -94,18 +96,14 @@ class InputFormState extends State<InputForm> {
         const SnackBar(content: Text('Submitted Successfully')),
       );
       _formKey.currentState!.save();
-      //r _entries.add(userInput);
-      _contacts.add(Contact(name: _contact.name));
+      _userentries.add(UserEntry(entry: _userentry.entry));
       _formKey.currentState!.reset();
     }
   }
 }
 
-// class Entries {
+class UserEntry {
+  UserEntry({required this.entry});
 
-// }
-class Contact {
-  Contact({required this.name});
-
-  String name;
+  String entry;
 }
