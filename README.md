@@ -7,6 +7,7 @@ Assumptions made:
 - No backend app requried as of now.
 - App only consist of the main page.
 - Diabling the button means that it still can be pressed but do not allow user to submit data.
+- App running in debug mode and not exported yet.
 
 Possible imporvements:
 
