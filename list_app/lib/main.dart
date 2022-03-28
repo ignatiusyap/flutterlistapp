@@ -33,10 +33,10 @@ class InputFormState extends State<InputForm> {
   //final List<Entries> _entries = [];
   //final List<String> _entries = [];
 
-  UserEntry _userentry = UserEntry(entry: "");
-  List<UserEntry> _userentries = [];
+  final UserEntry _userentry = UserEntry(entry: "");
+  final List<UserEntry> _userentries = [];
   int _charLength = 0;
-
+  //bool _enableBtn = false;
   final _formKey = GlobalKey<FormState>();
   //final userInputData = GlobalKey<ScaffoldState>();
   final textController = TextEditingController();
@@ -65,11 +65,16 @@ class InputFormState extends State<InputForm> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
+                      //_enableBtn = false;
                       return 'Please enter some text';
                     }
                     if (_charLength <= 99) {
+                      //_enableBtn = false;
                       return 'Please type at lest a 100 characters text';
                     }
+                    // else if (_charLength > -100) {
+                    //   setState(() => _enableBtn = true);
+                    // }
                     return null;
                   },
                   onSaved: (value) => setState(() => _userentry.entry = value!),
@@ -77,6 +82,7 @@ class InputFormState extends State<InputForm> {
                   //onSaved: (value) => userInput = value!,
                   ),
               ElevatedButton(
+                //onPressed: _enableBtn ? _validInput : null,
                 onPressed: _validInput,
                 child: const Text("Add text"),
               ),
@@ -121,6 +127,7 @@ class InputFormState extends State<InputForm> {
       );
       _formKey.currentState!.save();
       _userentries.add(UserEntry(entry: _userentry.entry));
+      //_enableBtn = false;
       _formKey.currentState!.reset();
     }
   }
