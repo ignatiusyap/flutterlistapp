@@ -61,7 +61,7 @@ class InputFormState extends State<InputForm> {
                   decoration: InputDecoration(
                     labelText: 'Enter text',
                     counterText: '$_charLength characters',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -134,7 +134,7 @@ class InputFormState extends State<InputForm> {
   void _scrollDown() {
     _controller.animateTo(
       _controller.position.maxScrollExtent,
-      duration: Duration(seconds: 2),
+      duration: const Duration(seconds: 2),
       curve: Curves.fastOutSlowIn,
     );
   }
@@ -142,7 +142,7 @@ class InputFormState extends State<InputForm> {
   void _scrollUp() {
     _controller.animateTo(
       _controller.position.minScrollExtent,
-      duration: Duration(seconds: 2),
+      duration: const Duration(seconds: 2),
       curve: Curves.fastOutSlowIn,
     );
   }
