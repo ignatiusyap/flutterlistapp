@@ -70,7 +70,7 @@ class InputFormState extends State<InputForm> {
                     }
                     if (_charLength <= 99) {
                       //_enableBtn = false;
-                      return 'Please type at lest a 100 characters text';
+                      return 'Please type at least a 100 characters text';
                     }
                     // else if (_charLength > -100) {
                     //   setState(() => _enableBtn = true);
